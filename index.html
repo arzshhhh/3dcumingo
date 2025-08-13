@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Cumingō — Modern Food & Catering</title>
+<meta name="description" content="Premium catering & dine-in. Book tables, explore our 3D food gallery, and order online." />
+<link rel="stylesheet" href="https://unpkg.com/swiper@10/swiper-bundle.min.css" />
+
+<style>
+:root{
+  --bg:#0b0d10;--panel:#11151a;--muted:#9aa4ad;--text:#e9eef3;
+  --brand:#5eb1ff;--brand-2:#7bf1a8;--card:#141922;--accent:#ffd166;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--text);
+font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;line-height:1.4}
+.container{width:min(1200px,92%);margin-inline:auto}
+.btn{display:inline-block;padding:.85rem 1.1rem;border-radius:.6rem;text-decoration:none;border:1px solid transparent;font-weight:600}
+.btn-primary{background:linear-gradient(90deg,var(--brand),var(--brand-2));color:#0a0a0a}
+.btn-outline{border-color:rgba(255,255,255,.18);color:var(--text)}
+.btn-ghost{border-color:transparent;background:rgba(255,255,255,.06);color:var(--text)}
+.site-header{position:sticky;top:0;z-index:30;background:rgba(11,13,16,.6);
+backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,255,255,.06)}
+.header-inner{display:flex;align-items:center;justify-content:space-between;padding:.8rem 0}
+.brand{display:flex;align-items:center;gap:.6rem;font-weight:800;text-decoration:none;color:var(--text);letter-spacing:.3px}
+.brand-dot{width:.9rem;height:.9rem;border-radius:50%;background:linear-gradient(90deg,var(--brand),var(--brand-2))}
+.nav{display:flex;gap:1.2rem}
+.nav a{color:var(--muted);text-decoration:none;font-weight:600}
+.nav a:hover{color:var(--text)}
+.hamburger{display:none;background:none;border:0;cursor:pointer}
+.hamburger span{display:block;width:24px;height:2px;background:var(--text);margin:5px 0}
+.hero{padding:6.5rem 0 4rem;background:
+ radial-gradient(60% 80% at 10% 10%, #18202c 0%, transparent 60%),
+ radial-gradient(50% 60% at 90% 20%, #171e29 0%, transparent 55%)}
+.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:3rem;align-items:center}
+.hero-copy h1{font-size:clamp(2rem,3.2vw,3.2rem);margin:.2rem 0 1rem}
+.hero-copy p{color:var(--muted);max-width:50ch}
+.cta-row{display:flex;gap:.8rem;margin:1.2rem 0}
+.hero-badges{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:.4rem}
+.hero-badges span{padding:.4rem .6rem;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);border-radius:.5rem;color:var(--muted);font-size:.9rem}
+.hero-visual{min-height:380px;background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,0));border:1px solid rgba(255,255,255,.06);border-radius:1rem;position:relative;overflow:hidden}
+#heroCanvas{width:100%;height:100%;display:block;position:absolute;inset:0}
+.section-head{margin-bottom:1.6rem}
+.section-head h2{font-size:2rem;margin:0 0 .4rem}
+.section-head p{color:var(--muted)}
+.gallery{padding:4rem 0}
+.gallery-swiper{padding:1rem 0 3rem}
+.card{background:var(--card);border:1px solid rgba(255,255,255,.06);border-radius:1rem;overflow:hidden}
+.food-canvas{width:100%;height:380px;display:block}
+.card-info{padding:1rem 1rem 1.2rem;border-top:1px solid rgba(255,255,255,.06)}
+.card-info h3{margin:.2rem 0 .4rem}
+.card-info p{color:var(--muted);margin:0}
+.menu{padding:4rem 0;background:linear-gradient(180deg,rgba(255,255,255,.02),transparent)}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.menu-card{background:var(--panel);border:1px solid rgba(255,255,255,.06);padding:1rem;border-radius:.9rem}
+.menu-card h4{margin:.2rem 0 .2rem}
+.menu-card p{color:var(--muted)}
+.price{display:inline-block;margin-top:.4rem;color:var(--accent);font-weight:700}
+.about{padding:4rem 0}
+.about-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:1.2rem}
+.about-copy p{color:var(--muted)}
+.ticks{list-style:none;margin:1rem 0 0;padding:0}
+.ticks li{margin:.4rem 0;padding-left:1.2rem;position:relative}
+.ticks li::before{content:"✓";position:absolute;left:0;top:0;color:var(--brand)}
+.about-card{background:var(--panel);border:1px solid rgba(255,255,255,.06);padding:1rem;border-radius:.9rem}
+.cta{padding:4rem 0}
+.cta-inner{background:linear-gradient(90deg,rgba(94,177,255,.12),rgba(123,241,168,.12));border:1px solid rgba(255,255,255,.08);border-radius:1rem;padding:2rem;text-align:center}
+.site-footer{padding:1.4rem 0;border-top:1px solid rgba(255,255,255,.06);margin-top:2rem}
+.footer-inner{display:flex;align-items:center;justify-content:space-between}
+.footer-inner a{color:var(--muted);text-decoration:none}
+.footer-inner a:hover{color:var(--text)}
+.swiper-button-prev,.swiper-button-next{color:#fff}
+.swiper-pagination-bullet{background:rgba(255,255,255,.6)}
+.swiper-pagination-bullet-active{background:#fff}
+@media (max-width: 980px){
+  .hero-grid{grid-template-columns:1fr;gap:1.2rem}
+  .about-grid{grid-template-columns:1fr}
+  .grid-3{grid-template-columns:1fr}
+  .nav{display:none}
+  .hamburger{display:block}
+}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href="#"><span class="brand-dot"></span>Cumingō</a>
+    <nav class="nav">
+      <a href="#menu">Menu</a>
+      <a href="#gallery">3D Gallery</a>
+      <a href="#about">About</a>
+      <a href="#contact" class="btn btn-outline">Book</a>
+    </nav>
+    <button class="hamburger" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container hero-grid">
+    <div class="hero-copy">
+      <h1>Elevated dining with a playful twist.</h1>
+      <p>Seasonal produce, bold flavours, and an experience that lingers.</p>
+      <div class="cta-row">
+        <a href="#menu" class="btn btn-primary">Explore Menu</a>
+        <a href="#gallery" class="btn btn-ghost">3D Food Gallery</a>
+      </div>
+      <div class="hero-badges"><span>Open 7 days</span><span>Pickup & Delivery</span><span>Private Events</span></div>
+    </div>
+    <div class="hero-visual"><canvas id="heroCanvas"></canvas></div>
+  </div>
+</section>
+
+<section id="gallery" class="gallery">
+  <div class="container">
+    <div class="section-head">
+      <h2>Swipe the 3D Food</h2>
+      <p>Interactive, real 3D elements you can swipe through.</p>
+    </div>
+    <div class="swiper gallery-swiper">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide"><div class="card"><canvas class="food-canvas" data-food="donut"></canvas><div class="card-info"><h3>Signature Donut</h3><p>Glazed, fluffy, and dangerously good.</p></div></div></div>
+        <div class="swiper-slide"><div class="card"><canvas class="food-canvas" data-food="burger"></canvas><div class="card-info"><h3>Smash Burger</h3><p>Stacked layers, toasted bun, melty goodness.</p></div></div></div>
+        <div class="swiper-slide"><div class="card"><canvas class="food-canvas" data-food="sushi"></canvas><div class="card-info"><h3>Salmon Sushi</h3><p>Clean cuts, perfect balance, ocean-fresh.</p></div></div></div>
+        <div class="swiper-slide"><div class="card"><canvas class="food-canvas" data-food="pizza"></canvas><div class="card-info"><h3>Pizza Slice</h3><p>Hand-stretched base, playful toppings, crisp edge.</p></div></div></div>
+      </div>
+      <div class="swiper-pagination"></div>
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-button-next"></div>
+    </div>
+  </div>
+</section>
+
+<section id="menu" class="menu">
+  <div class="container">
+    <div class="section-head"><h2>Menu Highlights</h2></div>
+    <div class="grid-3">
+      <div class="menu-card"><h4>Truffle Fries</h4><p>Crispy with truffle oil.</p><span class="price">$12</span></div>
+      <div class="menu-card"><h4>Chilli Prawn Pasta</h4><p>Garlic, chilli, lemon zest.</p><span class="price">$26</span></div>
+      <div class="menu-card"><h4>Miso Eggplant</h4><p>Charred, sticky, umami-rich.</p><span class="price">$18</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="about" class="about">
+  <div class="container about-grid">
+    <div class="about-copy"><h2>Crafted with intention</h2><p>We champion local producers and rotate dishes with the seasons.</p><ul class="ticks"><li>Dietary-friendly</li><li>Melbourne-wide</li><li>Private dining</li></ul></div>
+    <div class="about-card"><h3>Hours</h3><p>Mon–Sun: 11am–10pm</p></div>
+  </div>
+</section>
+
+<section id="contact" class="cta">
+  <div class="container cta-inner">
+    <h2>Ready to book?</h2>
+    <a href="#" class="btn btn-primary">Book a Table</a>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <p>© <span id="year"></span> Cumingō</p>
+  </div>
+</footer>
+
+<script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
+<script src="https://unpkg.com/three@0.160.0/examples/js/controls/OrbitControls.js"></script>
+<script src="https://unpkg.com/swiper@10/swiper-bundle.min.js"></script>
+
+<script>
+const $ = (q, ctx=document) => ctx.querySelector(q);
+const $$ = (q, ctx=document) => Array.from(ctx.querySelectorAll(q));
+$("#year").textContent = new Date().getFullYear();
+$(".hamburger")?.addEventListener("click",()=>{$(".nav").style.display=$(".nav").style.display==="flex"?"none":"flex"});
+
+function makeRenderer(c){const r=new THREE.WebGLRenderer({canvas:c,antialias:true,alpha:true});r.setPixelRatio(Math.min(devicePixelRatio,2));r.setSize(c.clientWidth,c.clientHeight,false);return r;}
+function makeCamera(c){const cam=new THREE.PerspectiveCamera(45,c.clientWidth/c.clientHeight,0.1,100);cam.position.set(4,3.5,6);return cam;}
+function makeScene(){const s=new THREE.Scene();s.add(new THREE.AmbientLight(0xffffff,0.7));let d1=new THREE.DirectionalLight(0xffffff,1);d1.position.set(5,8,4);s.add(d1);let g=new THREE.PlaneGeometry(50,50),m=new THREE.MeshStandardMaterial({color:0x0f141c,metalness:0.2,roughness:0.9});let gr=new THREE.Mesh(g,m);gr.rotation.x=-Math.PI/2;gr.position.y=-2.2;gr.receiveShadow=true;s.add(gr);return s;}
+function fitRenderer(r,c){const w=r.domElement.clientWidth,h=r.domElement.clientHeight;if(r.domElement.width!==w*devicePixelRatio||r.domElement.height!==h*devicePixelRatio){r.setSize(w,h,false);c.aspect=w/h;c.updateProjectionMatrix();}}
+
+function buildDonut(){const g=new THREE.Group();let t=new THREE.Mesh(new THREE.TorusGeometry(1.2,0.5,32,100),new THREE.MeshStandardMaterial({color:0xffb3c7,metalness:.2,roughness:.4}));t.rotation.x=Math.PI*0.3;g.add(t);for(let i=0;i<120;i++){let geo=new THREE.CapsuleGeometry(0.02+Math.random()*0.02,0.08+Math.random()*0.06,2,4),mat=new THREE.MeshStandardMaterial();mat.color.setHSL(Math.random(),0.7,0.6);let mesh=new THREE.Mesh(geo,mat),a=Math.random()*Math.PI*2,R=1.2;mesh.position.set(Math.cos(a)*R,(Math.random()-.5)*0.3+0.25,Math.sin(a)*R);mesh.rotation.set(Math.random()*Math.PI,Math.random()*Math.PI,Math.random()*Math.PI);g.add(mesh);}return g;}
+function buildBurger(){const g=new THREE.Group();let bun=new THREE.Mesh(new THREE.SphereGeometry(1.6,32,32,0,Math.PI*2,0,Math.PI/2),new THREE.MeshStandardMaterial({color:0xe2a76f,roughness:.7,metalness:.1}));bun.position.y=0.9;g.add(bun);return g;}
+function buildSushi(){const g=new THREE.Group();g.add(new THREE.Mesh(new THREE.BoxGeometry(1.8,0.2,1.2),new THREE.MeshStandardMaterial({color:0xf4e7d3})));let s=new THREE.Mesh(new THREE.BoxGeometry(1.6,0.1,0.8),new THREE.MeshStandardMaterial({color:0xf1786b}));s.position.y=0.15;g.add(s);return g;}
+function buildPizza(){const g=new THREE.Group();g.add(new THREE.Mesh(new THREE.CylinderGeometry(0,1.5,0.2,30,1,false,0,Math.PI*0.5),new THREE.MeshStandardMaterial({color:0xffe39f})));return g;}
+
+function initCanvas(c){const r=makeRenderer(c),cam=makeCamera(c),s=makeScene();let f=c.dataset.food,mesh;mesh=f==="donut"?buildDonut():f==="burger"?buildBurger():f==="sushi"?buildSushi():buildPizza();s.add(mesh);let ctrl=new THREE.OrbitControls(cam,r.domElement);ctrl.enablePan=false;ctrl.autoRotate=true;ctrl.enableZoom=false;(function anim(){requestAnimationFrame(anim);ctrl.update();fitRenderer(r,cam);r.render(s,cam)})();}
+
+document.addEventListener("DOMContentLoaded",()=>{$$(".food-canvas").forEach(initCanvas);let hc=$("#heroCanvas");if(hc){hc.dataset.food="donut";initCanvas(hc);}new Swiper(".gallery-swiper",{slidesPerView:1,spaceBetween:20,pagination:{el:".swiper-pagination",clickable:true},navigation:{nextEl:".swiper-button-next",prevEl:".swiper-button-prev"}});});
+</script>
+</body>
+</html>
